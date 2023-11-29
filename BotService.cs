@@ -5,62 +5,6 @@ using Microsoft.Extensions.Logging;
 
 namespace DiscordBot
 {
-
-    public interface ISlashCommand
-    {
-        public string GetCommandName();
-        public SlashCommandBuilder GetBuilder();
-        public Task ExecuteAsync(SocketSlashCommand command);
-    }
-
-    public class StartServerCommand : ISlashCommand
-    {
-        private const string NAME = "start-server";
-        public string GetCommandName() => NAME;
-
-        public SlashCommandBuilder GetBuilder()
-        {
-            var cb = new SlashCommandBuilder();
-            cb.WithName(NAME);
-            cb.WithDescription("Starts the server");
-
-            return cb;
-        }
-
-        public async Task ExecuteAsync(SocketSlashCommand command)
-        {
-            Console.WriteLine("Starting server..");
-            await command.FollowupAsync("Starting server..");
-            if (await TryStartVMAsync())
-            {
-                await command.FollowupAsync("Server started!");
-            }
-            else
-            {
-                await command.FollowupAsync("Server failed to start!");
-            };
-        }
-
-        private async Task<bool> TryStartVMAsync()
-        {
-            try
-            {
-                var cts = new CancellationTokenSource();
-                cts.CancelAfter(TimeSpan.FromSeconds(15));
-
-                await Task.Delay(TimeSpan.FromMinutes(1), cts.Token);
-
-                return false;
-            }
-            catch (TaskCanceledException e)
-            {
-                Console.WriteLine("Starting VM timed out");
-                Console.WriteLine(e.ToString());
-                return false;
-            }
-        }
-    }
-
     public class BotService : IHostedService
     {
         private readonly ILogger<BotService> _log;

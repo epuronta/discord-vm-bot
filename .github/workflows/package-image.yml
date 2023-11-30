@@ -21,10 +21,10 @@ jobs:
 
         -
             name: Build and push Docker image
-            uses: docker/build-push-action@v2
+            uses: docker/build-push-action@v5
             with:
                 file: ./Dockerfile
                 push: true
                 context: .
-                tags: ${{ vars.DOCKERHUB_REPOSITORY}}:${{ github.sha }}
+                tags: ${{ vars.DOCKERHUB_REPOSITORY}}:${{ github.sha }},"${{ vars.DOCKERHUB_REPOSITORY}}:latest"
 

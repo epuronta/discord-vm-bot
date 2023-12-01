@@ -25,6 +25,6 @@ jobs:
             with:
                 file: ./Dockerfile
                 push: true
-                context: .
+                context: ./src
                 tags: ${{ vars.DOCKERHUB_REPOSITORY}}:${{ github.sha }},"${{ vars.DOCKERHUB_REPOSITORY}}:latest"
 

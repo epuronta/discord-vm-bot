@@ -1,8 +1,18 @@
 
 
+## Creating the Discord app
 
+Follow the instructions https://discordnet.dev/guides/getting_started/first-bot.html to create an application and the related bot.
 
-## Configuring the app and creating the Azure Service Principal
+The bot needs permission to register global slash commands.
+
+When done, register the bot to your server following the instructions.
+
+Get the token for your bot from the application panel and put it to your `.env` file.
+
+`DISCORD_TOKEN=my-token-here`
+
+## Creating the Azure Service Principal
 
 To programmatically manage the virtual machine, Azure requires you to create a Service Principal. This can be terribly convoluted,
 but for this simple purpose, we create it in a simple way.
@@ -76,3 +86,9 @@ AZURE_TENANT_ID="my-tenant-id"
 AZURE_SUBSCRIPTION_ID="12345678-1234-1234-1234-111122223333"
 AZURE_VIRTUAL_MACHINE_ID="/subscriptions/12345678-1234-1234-1234-111122223333/resourceGroups/my-rg/providers/Microsoft.Compute/virtualMachines/my-server-name"
 ```
+
+## Azure Container App Deployment
+
+Use `./deploy/azure/create-container-app.sh` to deploy the image as an Azure Container App. The command uses the latest built image from Dockerhub.
+
+The deploy is run locally so there's no need to set up another service principal to manage the deployment.
